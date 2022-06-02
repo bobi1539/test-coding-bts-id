@@ -1,14 +1,18 @@
 package zero.programmer.test.coding.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import zero.programmer.test.coding.entitites.User;
 import zero.programmer.test.coding.models.UserResponse;
 import zero.programmer.test.coding.repositories.UserRepository;
 import zero.programmer.test.coding.services.UserService;
 
+import javax.transaction.Transactional;
 import java.nio.charset.Charset;
 import java.util.Random;
 
+@Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -30,7 +34,7 @@ public class UserServiceImpl implements UserService {
         UserResponse response = new UserResponse();
         response.setEmail(user.getEmail());
         response.setUsername(user.getUsername());
-        response.setToken("ABC");
+        response.setToken(getToken());
         return response;
     }
 
