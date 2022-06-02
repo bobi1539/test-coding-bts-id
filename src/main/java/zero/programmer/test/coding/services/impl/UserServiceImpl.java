@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         UserResponse response = new UserResponse();
         response.setEmail(user.getEmail());
         response.setUsername(user.getUsername());
-        response.setToken("TOKEN");
+        response.setToken(getToken());
         return response;
     }
 
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
             if(user.get().getPassword().equals(loginRequest.getPassword())){
                 UserResponse userResponse = new UserResponse();
                 userResponse.setEmail(user.get().getEmail());
-                userResponse.setToken("TOKEN");
+                userResponse.setToken(getToken());
                 userResponse.setUsername(user.get().getUsername());
                 return userResponse;
             }
@@ -71,11 +71,35 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email).isPresent();
     }
 
-//    private String getToken() {
-//        byte[] array = new byte[7]; // length is bounded by 7
-//        new Random().nextBytes(array);
-//        String generatedString = new String(array, Charset.forName("UTF-8"));
-//
-//        return generatedString;
-//    }
+    private String getToken() {
+        // create a string of all characters
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        // create random string builder
+        StringBuilder sb = new StringBuilder();
+
+        // create an object of Random class
+        Random random = new Random();
+
+        // specify length of random string
+        int length = 50;
+
+        for(int i = 0; i < length; i++) {
+
+            // generate random index number
+            int index = random.nextInt(alphabet.length());
+
+            // get character specified by index
+            // from the string
+            char randomChar = alphabet.charAt(index);
+
+            // append the character to string builder
+            sb.append(randomChar);
+        }
+
+        String randomString = sb.toString();
+        return randomString;
+
+
+    }
 }
